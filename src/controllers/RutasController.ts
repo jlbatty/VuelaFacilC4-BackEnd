@@ -39,16 +39,28 @@ export const obtenerRutaPorId = async (
       //si no encuentra nada, hay que enviar un mensaje
       console.log('No se encontro ninguna ruta')
     }
-  }catch (error) {
+  } catch (error) {
     console.error(error)
   } finally {
     client.close()
   }
 }
 
-// export const obtenerRutas = async (req, res) =>{
-//   //acá pongo la lógica del método
-// }
+export const obtenerRutas = async ( res: Response<any, Record<string, any>, number>) =>{
+    const client = getConnection()
+    const query = {}
+    try {
+      await client.connect()
+      const cursor = await client.db('vuelaFacil').collection('rutas').find(query)
+      const data = await cursor.toArray()
+      res.status(200)
+      res.send(data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      client.close()
+    }
+}
 // export const agregarRuta = (req, res) =>{
 //   //acá pongo la lógica del método
 // }
