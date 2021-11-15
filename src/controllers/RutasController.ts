@@ -3,18 +3,7 @@ import { ParsedQs } from "qs";
 import { ObjectId } from "mongodb";
 
 import getConnection from "../services/mongo.service"
-
-interface Aeropuerto {
-  nombre: string;
-  ciudad: string;
-  IATA: string;
-}
-interface Ruta {
-  salida: Aeropuerto;
-  llegada: Aeropuerto;
-  duracionVuelo: string;
-  distancia: number;
-}
+import { findDocumentById } from "./Controller";
 
 export const obtenerRutaPorId = async (
   req: Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>, 
@@ -25,9 +14,9 @@ export const obtenerRutaPorId = async (
   const client = getConnection()
   try{
     //el id se le debe pasar como un objeto de tipo ObjectId
-    const id = new ObjectId(req.params.id) 
-    //Armo un objeto con la query, o condiciones de filtro de la busqueda
-    const query = { "_id": id}
+     //Armo un objeto con la query, o condiciones de filtro de la busqueda
+    const query = { "_id": new ObjectId(req.params.id)}
+    findDocumentById(res,query, 'rutas')
     //Luego conecto y ejecuto la query
     await client.connect();
     const ruta = await client.db('vuelaFacil').collection('rutas').findOne(query)
