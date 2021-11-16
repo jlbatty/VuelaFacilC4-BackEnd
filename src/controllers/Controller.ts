@@ -1,3 +1,4 @@
+import { response } from "express";
 import { Response } from "express-serve-static-core";
 import getConnection from "../services/mongo.service";
 
@@ -51,7 +52,6 @@ export const findDocuments = async (
 
 export const insertDocument = async (
   res: Response<any, Record<string, any>, number>, 
-  query:Object, 
   collection:string,
   document:Object) => {
 
@@ -61,8 +61,11 @@ export const insertDocument = async (
       const result = await client.db('vuelaFacil').collection(collection).insertOne(document)
       //result es una promesa que se resuelve al documento insertado. Si no se resuelve el catch captura el error
       console.log(`se inserto un documento con el id ${result.insertedId}`)
-      
+      res.status(201)
+      res.send(`se inserto un documento con el id ${result.insertedId}`)
     } catch (error) {
+      res.status(501)
+      res.send('No se pudo insertar el documento')
       console.log(error)
     } finally {
       client.close()

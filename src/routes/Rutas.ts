@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { Express } from 'express-serve-static-core';
-import { obtenerRutaPorId, obtenerRutas } from '../controllers/RutasController';
+import { agregarRuta, obtenerRutaPorId, obtenerRutas } from '../controllers/RutasController';
 
 const Rutas = (app: Express) : void => {
   
@@ -9,7 +9,7 @@ const Rutas = (app: Express) : void => {
 
   router.get('/rutas', (req, res) => obtenerRutas(res) )
   router.get('/rutas/:id', (req, res) => obtenerRutaPorId(req, res) )
-  router.post('rutas/', (req, res) => res.send(`se intentó crear un neuvo elemento`))
+  router.post('/rutas', (req, res) => agregarRuta(req, res))
   router.delete('rutas/:id', (req, res) => res.send(`se intentó borrar el elemento ${req.params.id}`))
   
   //debería acá solo tener las rutas o endpoints. 

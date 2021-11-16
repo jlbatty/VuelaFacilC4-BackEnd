@@ -2,57 +2,28 @@ import { Request, Response } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import { ObjectId } from "mongodb";
 
-import getConnection from "../services/mongo.service"
-import { findDocumentById } from "./Controller";
+import { findDocumentById, findDocuments, insertDocument } from "./Controller";
 
 export const obtenerRutaPorId = async (
   req: Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>, 
   res: Response<any, Record<string, any>, number>)
   : Promise<void> => {
 
-  //creo un cliente de Mongo
-  const client = getConnection()
-  try{
-    //el id se le debe pasar como un objeto de tipo ObjectId
-     //Armo un objeto con la query, o condiciones de filtro de la busqueda
     const query = { "_id": new ObjectId(req.params.id)}
     findDocumentById(res,query, 'rutas')
-    //Luego conecto y ejecuto la query
-    await client.connect();
-    const ruta = await client.db('vuelaFacil').collection('rutas').findOne(query)
-    if (ruta){
-      //si sí encontró la ruta, envía un status y la información encontrada
-      res.status(200)
-      res.send({ruta: ruta})
-    } else {
-      //si no encuentra nada, hay que enviar un mensaje
-      console.log('No se encontro ninguna ruta')
-    }
-  } catch (error) {
-    console.error(error)
-  } finally {
-    client.close()
-  }
 }
 
 export const obtenerRutas = async ( res: Response<any, Record<string, any>, number>) =>{
-    const client = getConnection()
     const query = {}
-    try {
-      await client.connect()
-      const cursor = await client.db('vuelaFacil').collection('rutas').find(query)
-      const data = await cursor.toArray()
-      res.status(200)
-      res.send(data)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      client.close()
-    }
+    findDocuments(res, query, 'rutas')
 }
-// export const agregarRuta = (req, res) =>{
-//   //acá pongo la lógica del método
-// }
+
+export const agregarRuta = (
+  req: Request<{}, any, any, ParsedQs, Record<string, any>>, 
+  res: Response<any, Record<string, any>, number>) =>{
+  const document = req.body
+  insertDocument(res,'rutas',document)
+}
 // export const obtenerRutaPorId = (req, res) =>{
 //   //acá pongo la lógica del método
 // }

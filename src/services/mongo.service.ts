@@ -1,7 +1,10 @@
 import { MongoClient } from 'mongodb';
+require('dotenv').config()
 
-const username = 'admin'
-const password = 'admin1234'
+
+const username = process.env.DB_USER || 'admin'
+const password = process.env.DB_PASSWORD || 'admin1234'
+
 const database = 'vuelaFacil'
 
 const getConnection = ():MongoClient => {
