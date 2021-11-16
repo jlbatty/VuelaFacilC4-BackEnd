@@ -3,6 +3,7 @@ import { ParsedQs } from "qs";
 import { ObjectId } from "mongodb";
 
 import { findDocumentById, findDocuments, insertDocument } from "./Controller";
+import { findDocumentById, findDocuments, insertDocument,deleteDocument,updateDocument } from "./Controller";
 
 export const obtenerRutaPorId = async (
   req: Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>, 
@@ -33,3 +34,22 @@ export const agregarRuta = (
 // export const eliminarRutas = (req, res) =>{
 //   //acá pongo la lógica del método
 // }
+
+export const borrarRuta = (
+  req: Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>,
+  res: Response<any, Record<string, any>, number>) => {
+  const query = { "_id": new ObjectId(req.params.id)}
+  deleteDocument(res,query, 'rutas')
+
+
+}
+export const actualizarRuta = (
+  req: Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>,
+  res: Response<any, Record<string, any>, number>) => {
+  const query = { "_id": new ObjectId(req.params.id)}
+  const document = req.body
+  updateDocument(res,query, 'rutas',document)
+
+
+}
+
