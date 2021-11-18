@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 //acá llamo a mi router
 Rutas(app);
 
+
 app.listen(port, () => {
     return console.log(`servidor corriendo sobre el puerto ${port}`)
 });

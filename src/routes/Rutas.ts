@@ -14,8 +14,7 @@ const Rutas = (app: Express) : void => {
   router.put('/modificarRuta/:id', (req, res) => actualizarRuta(req,res))
   
   
-  //debería acá solo tener las rutas o endpoints. 
-  //debería importar las rutas desde los controladores
+  
 
 }
 

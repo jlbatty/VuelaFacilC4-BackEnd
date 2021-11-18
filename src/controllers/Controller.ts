@@ -1,4 +1,3 @@
-import { response } from "express";
 import { Response } from "express-serve-static-core";
 import getConnection from "../services/mongo.service";
 

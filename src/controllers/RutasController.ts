@@ -2,7 +2,6 @@ import { Request, Response } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import { ObjectId } from "mongodb";
 
-import { findDocumentById, findDocuments, insertDocument } from "./Controller";
 import { findDocumentById, findDocuments, insertDocument,deleteDocument,updateDocument } from "./Controller";
 
 export const obtenerRutaPorId = async (
@@ -25,22 +24,12 @@ export const agregarRuta = (
   const document = req.body
   insertDocument(res,'rutas',document)
 }
-// export const obtenerRutaPorId = (req, res) =>{
-//   //acá pongo la lógica del método
-// }
-// export const actualizarRutas = (req, res) =>{
-//   //acá pongo la lógica del método
-// }
-// export const eliminarRutas = (req, res) =>{
-//   //acá pongo la lógica del método
-// }
 
 export const borrarRuta = (
   req: Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>,
   res: Response<any, Record<string, any>, number>) => {
   const query = { "_id": new ObjectId(req.params.id)}
   deleteDocument(res,query, 'rutas')
-
 
 }
 export const actualizarRuta = (
@@ -49,7 +38,5 @@ export const actualizarRuta = (
   const query = { "_id": new ObjectId(req.params.id)}
   const document = req.body
   updateDocument(res,query, 'rutas',document)
-
-
 }
 
