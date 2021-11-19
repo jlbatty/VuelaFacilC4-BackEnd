@@ -1,4 +1,5 @@
 import express from 'express';
+import Clientes from './routes/Clientes';
 import Rutas from './routes/Rutas'
 
 const app = express();
@@ -14,7 +15,7 @@ app.get('/', (req, res) => {
 
 //acá llamo a mi router
 Rutas(app);
-
+Clientes(app)
 
 app.listen(port, () => {
     return console.log(`servidor corriendo sobre el puerto ${port}`)

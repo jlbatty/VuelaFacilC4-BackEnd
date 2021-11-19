@@ -7,11 +7,11 @@ const Clientes = (app: Express) :void => {
 
   app.use('/',router)
 
-  router.get('/clientes', obtenerClientePorId )
-  router.get('/clientes/:id', obtenerClientes)
-  router.post('/clientes', agregarCliente)
-  router.put('/clientes', actualizarCliente)
-  router.delete('/clientes', borrarCliente)
+  router.get('/clientes', (req, res) => obtenerClientes(res) )
+  router.get('/clientes/:id', (req, res) => obtenerClientePorId(req, res))
+  router.post('/clientes', (req, res) => agregarCliente(req, res))
+  router.put('/clientes/:id', (req, res) => actualizarCliente(req, res))
+  router.delete('/clientes/:id', (req, res) => borrarCliente(req, res) )
 
 }
 
