@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import { Express } from 'express-serve-static-core';
 import { obtenerAeropuertos, obtenerAeropuertoPorId, agregarAeropuerto, borrarAeropuerto, actualizarAeropuerto } from '../controllers/AeropuertosController'
-const Rutas = (app: Express) : void => {
+
+const Aeropuertos = (app: Express) : void => {
   
   const router = Router();
   app.use('/', router)
@@ -14,4 +15,4 @@ const Rutas = (app: Express) : void => {
   
 }
 
-export default Rutas
+export default Aeropuertos
