@@ -11,11 +11,8 @@ const Rutas = (app: Express) : void => {
   router.get('/rutas/:id', (req, res) => obtenerRutaPorId(req, res) )
   router.post('/crearRutas', (req, res) => agregarRuta(req, res))
   router.delete('/eliminarRutas/:id', (req, res) => borrarRuta(req,res))
-  router.put('/modificarRuta/:id', (req, res) => actualizarRuta(req,res))
+  router.put('/modificarRuta/:id', (req, res) => actualizarRuta(req,res)) 
   
-  
-  
-
 }
 
 export default Rutas
