@@ -5,7 +5,7 @@ import { agregarRuta, obtenerRutaPorId, obtenerRutas,borrarRuta,actualizarRuta }
 const Rutas = (app: Express) : void => {
   
   const router = Router();
-  app.use('/', router)
+  app.use('/', router);
 
   router.get('/rutas', (req, res) => obtenerRutas(res) )
   router.get('/rutas/:id', (req, res) => obtenerRutaPorId(req, res) )
