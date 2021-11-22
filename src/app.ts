@@ -38,5 +38,5 @@ Reservas(app)
 
 
 app.listen(process.env.PORT || 3000, () => {
-  return console.log(`servidor corriendo sobre el puerto ${process.env.PORT}`)
-}); s
+  return console.log(`servidor corriendo sobre el puerto ${process.env.PORT || 3000}`)
+}); 
