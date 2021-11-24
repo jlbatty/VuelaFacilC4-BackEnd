@@ -60,8 +60,11 @@ export const insertDocument = async (
     const result = await client.db('vuelaFacil').collection(collection).insertOne(document)
     //result es una promesa que se resuelve al documento insertado. Si no se resuelve el catch captura el error
     console.log(`se inserto un documento con el id ${result.insertedId}`)
-    res.status(201)
-    res.send(`se inserto un documento con el id ${result.insertedId}`)
+    res.status(201).json({
+      status: 201,
+      _id: result.insertedId,
+      message: `se inserto un documento con el id ${result.insertedId}`
+    })
   } catch (error) {
     res.status(501)
     res.send('No se pudo insertar el documento')
@@ -82,8 +85,7 @@ export const deleteDocument = async (
     if (document) {
       const document = await client.db('vuelaFacil').collection(collection).deleteOne(query)
       if (document) {
-        res.status(200)
-        res.send(`se borro con exito el documento`)
+        res.status(200).json({ message: 'se borró con éxito el documento', status: 200 })
       }
     } else {
       res.status(404)
@@ -103,7 +105,7 @@ export const updateDocument = async (
   const client = getConnection()
   try {
     await client.connect()
-    const document = await client.db('vuelaFacil').collection(collection).updateOne(query,{$set:document1})
+    const document = await client.db('vuelaFacil').collection(collection).updateOne(query, { $set: document1 })
 
     if (document) {
 
