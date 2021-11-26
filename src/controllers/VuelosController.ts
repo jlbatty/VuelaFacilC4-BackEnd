@@ -16,20 +16,24 @@ export const obtenerVueloPorId = async (
 export const buscarVuelos = (
   req: Request<{}, any, any, ParsedQs, Record<string, any>>,
   res: Response<any, Record<string, any>, number>) => {
-
-  const date = new Date(req.body.fecha)
-  const tomorrow = new Date(req.body.fecha)
-  tomorrow.setDate(date.getDate() + 1)
-  const query = {
-    "ruta.salida.IATA": req.body.IATASalida,
-    "ruta.llegada.IATA": req.body.IATALlegada,
-    "fechaVuelo": {
-      $gte: date,
-      $lte: tomorrow
+  if (typeof (req.query.fecha) === 'string') {
+    const date = new Date(req.query.fecha)
+    const tomorrow = new Date(req.query.fecha)
+    tomorrow.setDate(date.getDate() + 1)
+    const query = {
+      "ruta.salida.IATA": req.query.IATASalida,
+      "ruta.llegada.IATA": req.query.IATALlegada,
+      "fechaVuelo": {
+        $gte: date,
+        $lte: tomorrow
+      }
     }
+    findDocuments(res, query, 'vuelos')
+  } else {
+    res.status(501).json({ message: 'internal server error: fecha debe llegar como string' })
+    res.send()
   }
 
-  findDocuments(res, query, 'vuelos')
 
 }
 
