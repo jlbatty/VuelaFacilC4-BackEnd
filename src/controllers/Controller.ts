@@ -14,8 +14,7 @@ export const findDocumentById = async (
       res.status(200)
       res.send(document)
     } else {
-      res.status(404)
-      res.send('No se encontró ningín documento')
+      res.status(404).json({ status: 404, message: 'No se encontró el documento' })
     }
   } catch (error) {
     console.error(error)
@@ -35,7 +34,7 @@ export const findDocuments = async (
     const cursor = await client.db('vuelaFacil').collection(collection).find(query)
     if ((await cursor.count()) === 0) {
       res.status(404)
-      res.send('No se encontró ningín documento')
+      res.send('No se encontró ningún documento')
     } else {
       const data = await cursor.toArray()
       res.status(200)
