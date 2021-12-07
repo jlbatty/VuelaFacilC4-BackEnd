@@ -2,7 +2,7 @@ import { Request, Response } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import { ObjectId } from "mongodb";
 
-import { findDocumentById, findDocuments, insertDocument, deleteDocument, updateDocument } from "./Controller";
+import { findDocumentById, findDocuments, insertDocument, deleteDocument, updateDocument, pushDocument } from "./Controller";
 
 export const obtenerVueloPorId = async (
   req: Request<{ id: string; }, any, any, ParsedQs, Record<string, any>>,
@@ -61,6 +61,10 @@ export const actualizarVuelo = (
   res: Response<any, Record<string, any>, number>) => {
   const query = { "_id": new ObjectId(req.params.id) }
   const document = req.body
-  updateDocument(res, query, 'vuelos', document)
+  if (req.header('push') === 'true') {
+    pushDocument(res, query, 'vuelos', document)
+  } else {
+    updateDocument(res, query, 'vuelos', document)
+  }
 }
 

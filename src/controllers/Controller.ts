@@ -121,3 +121,29 @@ export const updateDocument = async (
     client.close()
   }
 }
+
+export const pushDocument = async (
+  res: Response<any, Record<string, any>, number>,
+  query: Object,
+  collection: string,
+  document1: Object) => {
+  const client = getConnection()
+  try {
+    await client.connect()
+    const document = await client.db('vuelaFacil').collection(collection).updateOne(query, { $push: document1 })
+
+    if (document) {
+
+      res.status(200)
+      res.send(`se actualizaron correctamente los parametros`)
+
+    } else {
+      res.status(404)
+      res.send('no se pudieron actualizar los parametros')
+    }
+  } catch (error) {
+    console.error(error)
+  } finally {
+    client.close()
+  }
+}
