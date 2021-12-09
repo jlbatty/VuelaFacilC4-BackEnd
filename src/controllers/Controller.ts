@@ -107,10 +107,7 @@ export const updateDocument = async (
     const document = await client.db('vuelaFacil').collection(collection).updateOne(query, { $set: document1 })
 
     if (document) {
-
-      res.status(200)
-      res.send(`se actualizaron correctamente los parametros`)
-
+      res.status(200).json({ status: 200, message: 'se actualizaron correctamente los parametros' })
     } else {
       res.status(404)
       res.send('no se pudieron actualizar los parametros')
@@ -133,13 +130,9 @@ export const pushDocument = async (
     const document = await client.db('vuelaFacil').collection(collection).updateOne(query, { $push: document1 })
 
     if (document) {
-
-      res.status(200)
-      res.send(`se actualizaron correctamente los parametros`)
-
+      res.status(200).json({ status: 200, message: 'se actualizaron correctamente los parametros' })
     } else {
-      res.status(404)
-      res.send('no se pudieron actualizar los parametros')
+      res.status(400).json({ status: 200, message: 'No se pudieron actualizar los parámetros' })
     }
   } catch (error) {
     console.error(error)
