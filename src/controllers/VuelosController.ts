@@ -61,8 +61,9 @@ export const actualizarVuelo = (
   res: Response<any, Record<string, any>, number>) => {
   const query = { "_id": new ObjectId(req.params.id) }
   const document = req.body
+  const pushQuery = { 'asientosReservados': document }
   if (req.header('push') === 'true') {
-    pushDocument(res, query, 'vuelos', document)
+    pushDocument(res, query, 'vuelos', pushQuery)
   } else {
     updateDocument(res, query, 'vuelos', document)
   }

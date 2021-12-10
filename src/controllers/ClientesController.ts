@@ -18,14 +18,11 @@ export const obtenerClientePorCc = async (
   res: Response<any, Record<string, any>, number>
 ): Promise<void> => {
   if (typeof (req.query.cedula) === 'string') {
-    try {
-      const cedula = req.query.cedula
-      const query = { "documento": cedula }
-      console.log(query)
-      findDocumentById(res, query, 'clientes')
-    } catch (error) {
-      console.log(error)
-    }
+
+    const cedula = parseInt(req.query.cedula)
+    const query = { "documento": cedula }
+    findDocumentById(res, query, 'clientes')
+
   }
 }
 

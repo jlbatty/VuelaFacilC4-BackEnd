@@ -127,6 +127,7 @@ export const pushDocument = async (
   const client = getConnection()
   try {
     await client.connect()
+
     const document = await client.db('vuelaFacil').collection(collection).updateOne(query, { $push: document1 })
 
     if (document) {
