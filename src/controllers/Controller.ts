@@ -31,8 +31,9 @@ export const findDocuments = async (
   const client = getConnection()
   try {
     await client.connect()
-    const cursor = await client.db('vuelaFacil').collection(collection).find(query)
-    if ((await cursor.count()) === 0) {
+    const col = await client.db('vuelaFacil').collection(collection)
+    const cursor = col.find(query)
+    if ((await col.countDocuments(query)) === 0) {
       res.status(404)
       res.send('No se encontró ningún documento')
     } else {
